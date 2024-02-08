@@ -1,0 +1,181 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang2057{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 1. mysql> CREATE TABLE patients(\par
+     patient_id int PRIMARY KEY,\par
+     patient_name varchar(50),\par
+     age INT,\par
+     gender VARCHAR(20),\par
+     city VARCHAR(50),\par
+     date_of_admission DATE,\par
+     status VARCHAR(50),\par
+     doctor_id int, FOREIGN KEY(doctor_id) references doctor(doctor_id));\par
+mysql> desc patients;\par
++-------------------+-------------+------+-----+---------+-------+\par
+| Field             | Type        | Null | Key | Default | Extra |\par
++-------------------+-------------+------+-----+---------+-------+\par
+| patient_id        | int         | NO   | PRI | NULL    |       |\par
+| patient_name      | varchar(50) | YES  |     | NULL    |       |\par
+| age               | int         | YES  |     | NULL    |       |\par
+| gender            | varchar(50) | YES  |     | NULL    |       |\par
+| city              | varchar(50) | YES  |     | NULL    |       |\par
+| date_of_admission | date        | YES  |     | NULL    |       |\par
+| status            | varchar(50) | YES  |     | NULL    |       |\par
+| doctor_id         | int         | YES  | MUL | NULL    |       |\par
++-------------------+-------------+------+-----+---------+-------+\par
+8 rows in set (0.01 sec)\par
+SELECT * FROM patients;\par
++------------+--------------+------+--------+--------+-------------------+------------+-----------+\par
+| patient_id | patient_name | age  | gender | city   | date_of_admission | status     | doctor_id |\par
++------------+--------------+------+--------+--------+-------------------+------------+-----------+\par
+|          1 | Om           |   20 | Male   | Mumbai | 2022-01-01        | discharged |         1 |\par
+|          2 | Sanket       |   30 | Male   | Pune   | 2022-11-03        | admitted   |         3 |\par
+|          3 | Indraneel    |   30 | Male   | Pune   | 2023-10-03        | discharged |         2 |\par
+|          4 | Nayan        |   30 | Male   | Delhi  | 2023-10-03        | discharged |         2 |\par
+|          5 | Prajwal      |   30 | Male   | Osaka  | 2024-10-03        | admitted   |         2 |\par
++------------+--------------+------+--------+--------+-------------------+------------+-----------+\par
+5 rows in set (0.00 s\par
+\par
+2.  CREATE TABLE doctor(\par
+    -> doctor_id int PRIMARY KEY,\par
+    -> doctor_name varchar(50),\par
+    -> age INT,\par
+    -> gender VARCHAR(50),\par
+    -> city VARCHAR(50),\par
+    -> specialization VARCHAR(50),\par
+    -> years_of_experience INT,\par
+    -> salary INT);\par
+Query OK, 0 rows affected (0.07 sec)\par
+\par
+\par
+mysql> desc doctor\par
+    -> ;\par
++---------------------+-------------+------+-----+---------+-------+\par
+| Field               | Type        | Null | Key | Default | Extra |\par
++---------------------+-------------+------+-----+---------+-------+\par
+| doctor_id           | int         | NO   | PRI | NULL    |       |\par
+| doctor_name         | varchar(50) | YES  |     | NULL    |       |\par
+| age                 | int         | YES  |     | NULL    |       |\par
+| gender              | varchar(50) | YES  |     | NULL    |       |\par
+| city                | varchar(50) | YES  |     | NULL    |       |\par
+| specialization      | varchar(50) | YES  |     | NULL    |       |\par
+| years_of_experience | int         | YES  |     | NULL    |       |\par
+| salary              | int         | YES  |     | NULL    |       |\par
++---------------------+-------------+------+-----+---------+-------+\par
+8 rows in set (0.06 sec)\par
+\par
+mysql> SELECT * FROM doctor;\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+| doctor_id | doctor_name | age  | gender | city      | specialization | years_of_experience | salary |\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+|         1 | Ashwin      |   40 | Male   | Ahmedabad | Cardiology     |                  10 |  10000 |\par
+|         2 | Aryan       |   30 | Male   | Ahmedabad | Endo           |                   6 |  11000 |\par
+|         3 | Nami        |   30 | Female | Ahmedabad | Cardiology     |                   3 |   1000 |\par
+|         4 | Luffy       |   50 | Male   | Nagpur    | Cardiology     |                   1 |  10000 |\par
+|         5 | Manav       |   50 | Male   | Delhi     | Biology        |                   3 |  15000 |\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+5 rows in set (0.00 sec)\par
+\par
+4. \par
+ CREATE TABLE bkup_doctor LIKE doctor;\par
+INSERT INTO bkup_doctor VALUES  SELECT * FROM doctor;\par
+mysql> desc bkup_doctor;\par
++---------------------+-------------+------+-----+---------+-------+\par
+| Field               | Type        | Null | Key | Default | Extra |\par
++---------------------+-------------+------+-----+---------+-------+\par
+| doctor_id           | int         | NO   | PRI | NULL    |       |\par
+| doctor_name         | varchar(50) | YES  |     | NULL    |       |\par
+| age                 | int         | YES  |     | NULL    |       |\par
+| gender              | varchar(50) | YES  |     | NULL    |       |\par
+| city                | varchar(50) | YES  |     | NULL    |       |\par
+| specialization      | varchar(50) | YES  |     | NULL    |       |\par
+| years_of_experience | int         | YES  |     | NULL    |       |\par
+| salary              | int         | YES  |     | NULL    |       |\par
++---------------------+-------------+------+-----+---------+-------+\par
+8 rows in set (0.01 sec)\par
+CREATE TABLE bkup_patients LIKE patients;\par
+INSERT INTO bkup_patients VALUES SELECT * FROM patients ;\par
+desc bkup_patients;\par
++-------------------+-------------+------+-----+---------+-------+\par
+| Field             | Type        | Null | Key | Default | Extra |\par
++-------------------+-------------+------+-----+---------+-------+\par
+| patient_id        | int         | NO   | PRI | NULL    |       |\par
+| patient_name      | varchar(50) | YES  |     | NULL    |       |\par
+| age               | int         | YES  |     | NULL    |       |\par
+| gender            | varchar(50) | YES  |     | NULL    |       |\par
+| city              | varchar(50) | YES  |     | NULL    |       |\par
+| date_of_admission | date        | YES  |     | NULL    |       |\par
+| status            | varchar(50) | YES  |     | NULL    |       |\par
+| doctor_id         | int         | YES  | MUL | NULL    |       |\par
++-------------------+-------------+------+-----+---------+-------+\par
+8 rows in set (0.01 sec)\par
+\par
+5. \par
+mysql> SELECT * FROM patients WHERE city = "Pune" OR city = "Mumbai";\par
++------------+--------------+------+--------+--------+-------------------+------------+-----------+\par
+| patient_id | patient_name | age  | gender | city   | date_of_admission | status     | doctor_id |\par
++------------+--------------+------+--------+--------+-------------------+------------+-----------+\par
+|          1 | Om           |   20 | Male   | Mumbai | 2022-01-01        | discharged |         1 |\par
+|          2 | Sanket       |   30 | Male   | Pune   | 2022-11-03        | admitted   |         3 |\par
+|          3 | Indraneel    |   30 | Male   | Pune   | 2023-10-03        | discharged |         2 |\par
++------------+--------------+------+--------+--------+-------------------+------------+-----------+\par
+3 rows in set (0.00 sec)\par
+\par
+6.\par
+mysql> SELECT * FROM doctor WHERE city = "Ahmedabad" AND doctor_name LIKE "A%";\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+| doctor_id | doctor_name | age  | gender | city      | specialization | years_of_experience | salary |\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+|         1 | Ashwin      |   40 | Male   | Ahmedabad | Cardiology     |                  10 |  10000 |\par
+|         2 | Aryan       |   30 | Male   | Ahmedabad | Endo           |                   6 |  11000 |\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+2 rows in set (0.00 sec)\par
+\par
+7.\par
+mysql> SELECT * FROM doctor WHERE years_of_experience >= 4;\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+| doctor_id | doctor_name | age  | gender | city      | specialization | years_of_experience | salary |\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+|         1 | Ashwin      |   40 | Male   | Ahmedabad | Cardiology     |                  10 |  10000 |\par
+|         2 | Aryan       |   30 | Male   | Ahmedabad | Endo           |                   6 |  11000 |\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+2 rows in set (0.00 sec)\par
+\par
+8.\par
+mysql> UPDATE  doctor\par
+    -> SET salary = salary + 1000\par
+    -> WHERE years_of_experience > 5;\par
+Query OK, 2 rows affected (0.01 sec)\par
+Rows matched: 2  Changed: 2  Warnings: 0\par
+mysql> SELECT * FROM doctor;\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+| doctor_id | doctor_name | age  | gender | city      | specialization | years_of_experience | salary |\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+|         1 | Ashwin      |   40 | Male   | Ahmedabad | Cardiology     |                  10 |  11000 |\par
+|         2 | Aryan       |   30 | Male   | Ahmedabad | Endo           |                   6 |  12000 |\par
+|         3 | Nami        |   30 | Female | Ahmedabad | Cardiology     |                   3 |   1000 |\par
+|         4 | Luffy       |   50 | Male   | Nagpur    | Cardiology     |                   1 |  10000 |\par
+|         5 | Manav       |   50 | Male   | Delhi     | Biology        |                   3 |  15000 |\par
++-----------+-------------+------+--------+-----------+----------------+---------------------+--------+\par
+5 rows in set (0.00 sec)\par
+\par
+9.\par
+mysql> SELECT CITY, COUNT(CITY) FROM patients GROUP BY(CITY);\par
++--------+-------------+\par
+| CITY   | COUNT(CITY) |\par
++--------+-------------+\par
+| Mumbai |           1 |\par
+| Pune   |           2 |\par
+| Delhi  |           1 |\par
+| Osaka  |           1 |\par
++--------+-------------+\par
+4 rows in set (0.00 sec)\par
+10.\par
+ SELECT * FROM patients JOIN doctor WHERE patient.doctor_id = doctor.patient_id where doctor.years_of_experience > 3;\par
+11.\par
+\par
+\par
+\par
+\par
+\par
+}
+ 
